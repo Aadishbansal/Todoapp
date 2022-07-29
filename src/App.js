@@ -1,5 +1,5 @@
-import Index from "./Component/Index";
+import Todo from "./Component/Todo";
 function App() {
-  return <Index />;
+  return <Todo />;
 }
 export default App;

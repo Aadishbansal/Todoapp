@@ -1,51 +1,95 @@
 import React from "react";
-class display extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { temp: props.important };
-    // this.removeItem = this.removeItem.bind(this);
-  }
-  // removeItem(e) {
-  //   this.setState({
-  //     temp: this.state.temp.filter((item) => {
-  //       item == !e;
-  //     }),
-  //   });
-  // this.setState({temp:temp.filter(x)})
-  // console.log(this.props.temp);
-  // console.log(this.props.important);
-  // this.props.handleRemove();
-  // }
-  cheCk = () => {
-    console.log(this.state.temp);
+function Display(props) {
+  const removeItem = (e) => {
+    props.handleTaskRemove(e);
   };
-  render() {
-    // const Title = <h5 className="card-title">{this.props.title}</h5>;
-    // const Description = <p className="card-text">{this.props.description}</p>;
-    // let x = thi s.props.task;
-    // const main=
-    // const show=` {this.state.temp.length > 0 ?<div className="card w-75">
-    //       <div className="card-body"><p className="card-text">{this.props.task}</p>  <button className="btn btn-primary">Remove</button>
-    //       </div>
-    //     </div> :""}`
-
-    return (
-      <div className="container">
-        {/* <button onClick={this.cheCk}>this is check</button> */}
-        {this.props.important.length > 0
-          ? this.props.important.map((item) => (
-              <div className="card w-75">
+  const onCheck = (e) => {
+    console.log(e);
+    props.handleCheck(e);
+  };
+  const editItem = (e) => {
+    props.handleEdit(e);
+  };
+  return (
+    <div className="container d-flex  flex-wrap">
+      {props.todoList.length > 0
+        ? props.todoList.map((item, index) => {
+            return (
+              <div
+                className="card mt-3 mx-1"
+                style={{ width: "18rem" }}
+                key={index}
+              >
                 <div className="card-body">
-                  <p className="card-text">{item}</p>
-                  <button className="btn btn-primary" onClick={this.removeItem}>
-                    Remove
-                  </button>
+                  <p className={`card-text ${item.textDecoration}`}>
+                    {item.data}
+                  </p>
+                  {/* <div
+                    className="btn-group"
+                    role="group"
+                    aria-label="Basic mixed styles example"
+                  >
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => removeItem(index)}
+                    >
+                      Delete
+                    </button>
+                    <input
+                      type="checkbox"
+                      className="btn-check"
+                      id="btncheck2"
+                      // value={"Complete"}
+                      onChange={() => console.log(index)}
+                      checked={item.check}
+                    />
+                    <label
+                      className="btn btn-outline-primary"
+                      htmlFor="btncheck2"
+                    >
+                      Completed
+                    </label>
+
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={() => editItem(index)}
+                    >
+                      {item.editAble ? "Submit" : "Edit"}
+                    </button>
+                  </div> */}
+                  <div className="btn-group">
+                    <button
+                      type="button"
+                      className="btn btn-danger me-1"
+                      onClick={() => removeItem(index)}
+                    >
+                      Delete
+                    </button>
+                    <input
+                      className="form-check-input mx-0"
+                      type="checkbox"
+                      checked={item.check}
+                      onChange={() => onCheck(index)}
+                    />
+                    <label className="form-check-label me-2">
+                      {item.check ? "Completed" : "Complete"}
+                    </label>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => editItem(index)}
+                    >
+                      {item.editAble ? "Submit" : "Edit"}
+                    </button>
+                  </div>
                 </div>
               </div>
-            ))
-          : ""}
-      </div>
-    );
-  }
+            );
+          })
+        : ""}
+    </div>
+  );
 }
-export default display;
+export { Display };

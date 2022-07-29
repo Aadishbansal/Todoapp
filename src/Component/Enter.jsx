@@ -1,6 +1,5 @@
 import React from "react";
 class Data extends React.Component {
-  // const temp = "data";
   constructor(props) {
     super(props);
     this.state = {
@@ -20,16 +19,15 @@ class Data extends React.Component {
   };
 
   render() {
+    // console.log("Enter");
     return (
       <>
-        <div className="container-lg">
-          {/* Decsription */}
+        <div className="container-lg my-4">
           <div className="form-floating mb-3">
             <input
               type="text"
               className="form-control"
-              id=""
-              value={this.state.task}
+                value={this.state.task}
               onChange={this.dataChanged}
               placeholder="Enter Task to complete"
             />
