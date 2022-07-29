@@ -3,19 +3,68 @@ import React from "react";
 import Header from "./Header";
 import { Display } from "./Display";
 import Enter from "./Enter";
+
 class TodoItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       todoList: [
-        { data: "a", check: false, textDecoration: "", editAble: false },
-        { data: "b", check: false, textDecoration: "", editAble: false },
-        { data: "c", check: false, textDecoration: "", editAble: false },
-        { data: "d", check: false, textDecoration: "", editAble: false },
-        { data: "e", check: false, textDecoration: "", editAble: false },
-        { data: "f", check: false, textDecoration: "", editAble: false },
-        { data: "g", check: false, textDecoration: "", editAble: false },
-        { data: "h", check: false, textDecoration: "", editAble: false },
+        {
+          data: "a",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
+        {
+          data: "b",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
+        {
+          data: "c",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
+        {
+          data: "d",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
+        {
+          data: "e",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
+        {
+          data: "f",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
+        {
+          data: "g",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
+        {
+          data: "h",
+          check: false,
+          checkDecoration: "btn-outline-primary",
+          textDecoration: "",
+          editAble: false,
+        },
       ],
     };
   }
@@ -24,6 +73,7 @@ class TodoItem extends React.Component {
     let newTodo = {
       data: newTask,
       check: false,
+      checkDecoration: "btn-outline-primary",
       textDecoration: "",
       editAble: false,
     };
@@ -41,6 +91,7 @@ class TodoItem extends React.Component {
         if (item.check === false) {
           item.check = true;
           item.textDecoration = "text-decoration-line-through";
+          item.checkDecoration = "btn-primary";
         }
       }
     });
