@@ -1,5 +1,11 @@
 import Todo from "./Component/Todo";
+// import TodoSecond from "./Component2/TodoItem";
 function App() {
-  return <Todo />;
+  return (
+    <>
+      {/* <TodoSecond /> */}
+      <Todo />
+    </>
+  );
 }
 export default App;

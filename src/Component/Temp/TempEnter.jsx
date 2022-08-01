@@ -1,4 +1,5 @@
 import React from "react";
+import { Display } from "./Display";
 class Data extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,9 @@ class Data extends React.Component {
       this.setState({ task: "" });
     }
   };
-
+handleEditData=()=>{
+  console.log("first")
+}
   render() {
     // console.log("Enter");
     return (
@@ -42,7 +45,9 @@ class Data extends React.Component {
             Add
           </button>
         </div>
+        {/* <Display/>   */}
       </>
+      
     );
   }
 }

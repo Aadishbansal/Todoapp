@@ -2,114 +2,75 @@
 import React from "react";
 import Header from "./Header";
 import { Display } from "./Display";
-import Enter from "./Enter";
 
 class TodoItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      task: "",
       todoList: [
         {
+          id: 0,
           data: "a",
           check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
           editAble: false,
         },
         {
+          id: 1,
           data: "b",
           check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
           editAble: false,
         },
         {
+          id: 2,
           data: "c",
           check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
           editAble: false,
         },
         {
+          id: 3,
           data: "d",
           check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
-          editAble: false,
-        },
-        {
-          data: "e",
-          check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
-          editAble: false,
-        },
-        {
-          data: "f",
-          check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
-          editAble: false,
-        },
-        {
-          data: "g",
-          check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
-          editAble: false,
-        },
-        {
-          data: "h",
-          check: false,
-          checkDecoration: "btn-outline-primary",
-          textDecoration: "",
           editAble: false,
         },
       ],
     };
   }
-
-  handleAddTodo = (newTask) => {
-    let newTodo = {
-      data: newTask,
-      check: false,
-      checkDecoration: "btn-outline-primary",
-      textDecoration: "",
-      editAble: false,
-    };
-
-    this.setState({ todoList: [...this.state.todoList, newTodo] });
-    console.log(this.state.todoList);
+  dataChanged = (e) => {
+    this.setState({ task: e.target.value });
+  };
+  handleAddTodo = (e) => {
+    console.log(e);
+    if (!this.state.task) {
+      alert("task can't be empty");
+    } else {
+      let id;
+      this.state.todoList.length === 0
+        ? (id = 0)
+        : (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
+      const newTodo = {
+        id: id,
+        data: this.state.task,
+        check: false,
+        editAble: false,
+      };
+      // this.state.todoList.map((item) => {
+      //   return;
+      // });
+      this.setState({ todoList: [...this.state.todoList, newTodo], task: "" });
+    }
   };
   handleCheck = (e) => {
-    const newTodoList = [];
-    this.state.todoList.map((item) => {
-      newTodoList.push(item);
-    });
+    const newTodoList = [...this.state.todoList];
+    // this.state.todoList.map((item) => newTodoList.push(item));
     newTodoList.map((item, index) => {
-      if (index === e) {
-        if (item.check === false) {
-          item.check = true;
-          item.textDecoration = "text-decoration-line-through";
-          item.checkDecoration = "btn-primary";
-        }
-      }
+      return index === e && !item.editAble ? (item.check = !item.check) : "";
     });
     this.setState({ todoList: newTodoList });
-    // this.state.todoList.map((item, index) => {
-    //   if (index === e) {
-    //     if (item.check === false) {
-    //       item.check = true;
-    //     }
-    //   }
-    // });
-    // console.log(this.state.todoList);
+    // return index === e && !item.editAble && !item.check
   };
 
   handleRemove = (e) => {
-    // let newTodoList=this.state.todoList.map((item,index)=>{
-    //   return index!==e
-    // })
     const newTodoList = [];
     for (let index = 0; index < this.state.todoList.length; index++) {
       if (index !== e) {
@@ -119,23 +80,39 @@ class TodoItem extends React.Component {
     this.setState({ todoList: newTodoList });
   };
   handleEdit = (e) => {
-    const newTodoList = [];
-    this.state.todoList.map((item) => {
-      return newTodoList.push(item);
-    });
+    const newTodoList = [...this.state.todoList];
     newTodoList.map((item, index) => {
-      return index === e
-        ? (item.editAble = !item.editAble) // ? (item.editAble = !item.editAble) && (item.textDecoration = "")
+      return index === e && !item.check
+        ? ((item.editAble = !item.editAble), this.setState({ task: item.data }))
         : "";
     });
+    // console.log(x  );
     this.setState({ todoList: newTodoList });
-    console.log(this.state.todoList);
   };
   render() {
     return (
       <>
         <Header />
-        <Enter handleData={this.handleAddTodo} />
+        {/* Enter */}
+        <div className="container-lg mt-4 my-2 w-50">
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.task}
+              onChange={this.dataChanged}
+              placeholder="Enter Task to complete"
+            />
+            <label>Enter your task</label>
+          </div>
+          <button
+            type="button"
+            onClick={this.handleAddTodo}
+            className="btn btn-dark"
+          >
+            Add
+          </button>
+        </div>
         <Display
           todoList={this.state.todoList}
           handleTaskRemove={this.handleRemove}
