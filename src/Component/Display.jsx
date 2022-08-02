@@ -12,24 +12,30 @@ function Display(props) {
     props.handleCheck(e);
   };
   const editItem = (e) => {
+    // console.log(e);
     props.handleEdit(e);
   };
   return (
     <>
-      <div className="container d-flex flex-wrap justify-content-evenly w-50 ">
+      <div
+        className=" container d-flex flex-column overflow-auto"
+        style={{ maxHeight: "564px", width: "25em" }}
+      >
         {props.todoList.length > 0
           ? props.todoList.map((item, index) => {
               return (
                 <div
-                  className="card mt-2 mx-1 "
+                  className="card mt-2 mx-auto"
                   style={{ width: "18rem" }}
-                  key={item.id}
+                  key={index}
                 >
                   <div className="card-body">
                     <p
-                      className={`card-text ${
+                      className={`card-text overflow-auto ${
                         item.check ? "text-decoration-line-through" : ""
                       }`}
+                      style={{ maxHeight: "54px" }}
+                      onClick={() => onCheck(item.id)}
                     >
                       {item.data}
                     </p>
@@ -41,7 +47,7 @@ function Display(props) {
                       <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={() => removeItem(index)}
+                        onClick={() => removeItem(item.id)}
                       >
                         <RiDeleteBin5Line />
                       </button>
@@ -54,8 +60,8 @@ function Display(props) {
                           type="checkbox"
                           style={{ color: "black" }}
                           className="btn-check"
-                          onChange={() => onCheck(index)}
                           checked={item.check}
+                          onChange={() => onCheck(item.id)}
                         />
                         {item.check ? <TbCheckbox /> : <ImCheckboxUnchecked />}
                       </label>
@@ -64,9 +70,13 @@ function Display(props) {
                         type="button"
                         disabled={item.check}
                         className="btn btn-success"
-                        onClick={() => editItem(index)}
+                        onClick={() => editItem(item)}
                       >
-                        {item.check ? <MdEditOff /> : <MdModeEdit />}
+                        {item.check || item.editAble ? (
+                          <MdEditOff />
+                        ) : (
+                          <MdModeEdit />
+                        )}
                       </button>
                     </div>
                   </div>

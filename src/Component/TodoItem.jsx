@@ -2,11 +2,13 @@
 import React from "react";
 import Header from "./Header";
 import { Display } from "./Display";
+// import { GrUpdate, GrAdd } from "react-icons/gr";
 
 class TodoItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      update: false,
       task: "",
       todoList: [
         {
@@ -23,13 +25,13 @@ class TodoItem extends React.Component {
         },
         {
           id: 2,
-          data: "c",
+          data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Q",
           check: false,
           editAble: false,
         },
         {
           id: 3,
-          data: "d",
+          data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae deleniti alias cupiditate vel placeat est. Placeat hice",
           check: false,
           editAble: false,
         },
@@ -40,9 +42,19 @@ class TodoItem extends React.Component {
     this.setState({ task: e.target.value });
   };
   handleAddTodo = (e) => {
-    console.log(e);
     if (!this.state.task) {
       alert("task can't be empty");
+    } else if (this.state.update === true) {
+      // if (Object.keys(e).length === 4) {
+      // this.setState({ task: e.data });
+      console.log("object");
+      const newTodoList = [...this.state.todoList];
+      newTodoList.map((item) => {
+        return (item.id = e.id
+          ? ((item.editAble = !item.editAble),
+            this.setState({ task: item.data }))
+          : "");
+      });
     } else {
       let id;
       this.state.todoList.length === 0
@@ -54,17 +66,13 @@ class TodoItem extends React.Component {
         check: false,
         editAble: false,
       };
-      // this.state.todoList.map((item) => {
-      //   return;
-      // });
       this.setState({ todoList: [...this.state.todoList, newTodo], task: "" });
     }
   };
   handleCheck = (e) => {
     const newTodoList = [...this.state.todoList];
-    // this.state.todoList.map((item) => newTodoList.push(item));
     newTodoList.map((item, index) => {
-      return index === e && !item.editAble ? (item.check = !item.check) : "";
+      return index === e && !item.editAble ? (item.check = true) : "";
     });
     this.setState({ todoList: newTodoList });
     // return index === e && !item.editAble && !item.check
@@ -72,47 +80,54 @@ class TodoItem extends React.Component {
 
   handleRemove = (e) => {
     const newTodoList = [];
-    for (let index = 0; index < this.state.todoList.length; index++) {
-      if (index !== e) {
-        newTodoList.push(this.state.todoList[index]);
-      }
-    }
+    this.state.todoList.map((item) => {
+      return item.id !== e ? newTodoList.push(item) : "";
+    });
+
     this.setState({ todoList: newTodoList });
   };
   handleEdit = (e) => {
     const newTodoList = [...this.state.todoList];
-    newTodoList.map((item, index) => {
-      return index === e && !item.check
-        ? ((item.editAble = !item.editAble), this.setState({ task: item.data }))
+    newTodoList.map((item) => {
+      return item.id === e.id
+        ? ((item.editAble = !item.editAble),
+          this.setState({ task: item.data, update: true }))
         : "";
     });
-    // console.log(x  );
     this.setState({ todoList: newTodoList });
   };
   render() {
+    const input = (
+      <div className=" mt-4 mx-auto " style={{ width: "25em" }}>
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter your task"
+            value={this.state.task}
+            onChange={this.dataChanged}
+            aria-label="Enter your task"
+            aria-describedby="button-addon2"
+          />
+          <button
+            className="btn btn-outline-secondary text-white"
+            type="button"
+            id="button-addon2"
+            onClick={this.handleAddTodo}
+          >
+            {
+              this.state.update ? "Update" : "Add"
+              /* <GrUpdate style={{ textColor: "white" }} />
+              <GrAdd />*/
+            }
+          </button>
+        </div>
+      </div>
+    );
     return (
       <>
         <Header />
-        {/* Enter */}
-        <div className="container-lg mt-4 my-2 w-50">
-          <div className="form-floating mb-3">
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.task}
-              onChange={this.dataChanged}
-              placeholder="Enter Task to complete"
-            />
-            <label>Enter your task</label>
-          </div>
-          <button
-            type="button"
-            onClick={this.handleAddTodo}
-            className="btn btn-dark"
-          >
-            Add
-          </button>
-        </div>
+        {input}
         <Display
           todoList={this.state.todoList}
           handleTaskRemove={this.handleRemove}
