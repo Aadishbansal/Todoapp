@@ -22,12 +22,12 @@ function Display(props) {
         style={{ maxHeight: "564px", width: "25em" }}
       >
         {props.todoList.length > 0
-          ? props.todoList.map((item, index) => {
+          ? props.todoList.map((item) => {
               return (
                 <div
                   className="card mt-2 mx-auto"
                   style={{ width: "18rem" }}
-                  key={index}
+                  key={item.id}
                 >
                   <div className="card-body">
                     <p
@@ -70,13 +70,9 @@ function Display(props) {
                         type="button"
                         disabled={item.check}
                         className="btn btn-success"
-                        onClick={() => editItem(item)}
+                        onClick={() => editItem(item.id)}
                       >
-                        {item.check || item.editAble ? (
-                          <MdEditOff />
-                        ) : (
-                          <MdModeEdit />
-                        )}
+                        {item.check ? <MdEditOff /> : <MdModeEdit />}
                       </button>
                     </div>
                   </div>

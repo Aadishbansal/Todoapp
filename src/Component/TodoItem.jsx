@@ -15,25 +15,21 @@ class TodoItem extends React.Component {
           id: 0,
           data: "a",
           check: false,
-          editAble: false,
         },
         {
           id: 1,
           data: "b",
           check: false,
-          editAble: false,
         },
         {
           id: 2,
           data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Q",
           check: false,
-          editAble: false,
         },
         {
           id: 3,
           data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae deleniti alias cupiditate vel placeat est. Placeat hice",
           check: false,
-          editAble: false,
         },
       ],
     };
@@ -41,20 +37,9 @@ class TodoItem extends React.Component {
   dataChanged = (e) => {
     this.setState({ task: e.target.value });
   };
-  handleAddTodo = (e) => {
+  handleAddTodo = () => {
     if (!this.state.task) {
       alert("task can't be empty");
-    } else if (this.state.update === true) {
-      // if (Object.keys(e).length === 4) {
-      // this.setState({ task: e.data });
-      console.log("object");
-      const newTodoList = [...this.state.todoList];
-      newTodoList.map((item) => {
-        return (item.id = e.id
-          ? ((item.editAble = !item.editAble),
-            this.setState({ task: item.data }))
-          : "");
-      });
     } else {
       let id;
       this.state.todoList.length === 0
@@ -64,37 +49,49 @@ class TodoItem extends React.Component {
         id: id,
         data: this.state.task,
         check: false,
-        editAble: false,
       };
-      this.setState({ todoList: [...this.state.todoList, newTodo], task: "" });
+      this.setState({
+        todoList: [...this.state.todoList, newTodo],
+        task: "",
+        update: false,
+      });
+      console.log(this.state.todoList);
     }
   };
-  handleCheck = (e) => {
-    const newTodoList = [...this.state.todoList];
-    newTodoList.map((item, index) => {
-      return index === e && !item.editAble ? (item.check = true) : "";
-    });
-    this.setState({ todoList: newTodoList });
-    // return index === e && !item.editAble && !item.check
-  };
-
-  handleRemove = (e) => {
-    const newTodoList = [];
-    this.state.todoList.map((item) => {
-      return item.id !== e ? newTodoList.push(item) : "";
-    });
-
-    this.setState({ todoList: newTodoList });
-  };
-  handleEdit = (e) => {
+  handleCheck = (id) => {
     const newTodoList = [...this.state.todoList];
     newTodoList.map((item) => {
-      return item.id === e.id
-        ? ((item.editAble = !item.editAble),
-          this.setState({ task: item.data, update: true }))
-        : "";
+      return item.id === id ? (item.check = true) : "";
     });
     this.setState({ todoList: newTodoList });
+    console.log(this.state.todoList);
+  };
+
+  handleRemove = (id) => {
+    const newTodoList = this.state.todoList.filter((item) => {
+      return item.id !== id;
+    });
+
+    this.setState({ todoList: newTodoList }); 
+  };
+  handleEdit = (id) => {
+    const newTodoList = this.state.todoList.filter((item) => item.id !== id);
+    const selected = this.state.todoList.find((item) => {
+      return item.id === id;
+    });
+    this.setState({
+      task: selected.data,
+      update: true,
+      todoList: newTodoList,
+    });
+    // newTodoList.map((item) => {
+    //   return item.id === e.id
+    //     ? ((item.editAble = !item.editAble),
+    //       // this.setState({ task: item.data, update: true }))
+    //       this.setState({ task: item.data, update: true }))
+    //     : "";
+    // });
+    // this.setState({ todoList: newTodoList });
   };
   render() {
     const input = (
