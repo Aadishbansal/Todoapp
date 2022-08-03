@@ -11,26 +11,26 @@ class TodoItem extends React.Component {
       update: false,
       task: "",
       todoList: [
-        {
-          id: 0,
-          data: "a",
-          check: false,
-        },
-        {
-          id: 1,
-          data: "b",
-          check: false,
-        },
-        {
-          id: 2,
-          data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Q",
-          check: false,
-        },
-        {
-          id: 3,
-          data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae deleniti alias cupiditate vel placeat est. Placeat hice",
-          check: false,
-        },
+        // {
+        //   id: 0,
+        //   data: "a",
+        //   check: false,
+        // },
+        // {
+        //   id: 1,
+        //   data: "b",
+        //   check: false,
+        // },
+        // {
+        //   id: 2,
+        //   data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Q",
+        //   check: false,
+        // },
+        // {
+        //   id: 3,
+        //   data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae deleniti alias cupiditate vel placeat est. Placeat hice",
+        //   check: false,
+        // },
       ],
     };
   }
