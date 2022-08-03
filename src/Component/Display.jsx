@@ -12,14 +12,13 @@ function Display(props) {
     props.handleCheck(e);
   };
   const editItem = (e) => {
-    // console.log(e);
     props.handleEdit(e);
   };
   return (
     <>
       <div
         className=" container d-flex flex-column overflow-auto"
-        style={{ maxHeight: "564px", width: "25em" }}
+        style={{ maxHeight: "541px", width: "25em" }}
       >
         {props.todoList.length > 0
           ? props.todoList.map((item) => {

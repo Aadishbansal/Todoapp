@@ -21,5 +21,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 # files
-/Component2
-/Component/Temp
+/src/Component/Temp

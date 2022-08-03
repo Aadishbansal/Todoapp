@@ -1,43 +1,19 @@
-// EDIT
 import React from "react";
-import Header from "./Header";
 import { Display } from "./Display";
 // import { GrUpdate, GrAdd } from "react-icons/gr";
-
 class TodoItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       update: false,
       task: "",
-      todoList: [
-        // {
-        //   id: 0,
-        //   data: "a",
-        //   check: false,
-        // },
-        // {
-        //   id: 1,
-        //   data: "b",
-        //   check: false,
-        // },
-        // {
-        //   id: 2,
-        //   data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Q",
-        //   check: false,
-        // },
-        // {
-        //   id: 3,
-        //   data: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae deleniti alias cupiditate vel placeat est. Placeat hice",
-        //   check: false,
-        // },
-      ],
+      todoList: [],
     };
   }
   dataChanged = (e) => {
     this.setState({ task: e.target.value });
   };
-  handleAddTodo = () => {
+  handleAddTodo = (e) => {
     if (!this.state.task) {
       alert("task can't be empty");
     } else {
@@ -57,6 +33,12 @@ class TodoItem extends React.Component {
       });
       console.log(this.state.todoList);
     }
+    e.preventDefault();
+  };
+  handleClear = () => {
+    this.state.todoList.length === 0
+      ? alert("List is already empty")
+      : this.setState({ todoList: [] });
   };
   handleCheck = (id) => {
     const newTodoList = [...this.state.todoList];
@@ -72,7 +54,7 @@ class TodoItem extends React.Component {
       return item.id !== id;
     });
 
-    this.setState({ todoList: newTodoList }); 
+    this.setState({ todoList: newTodoList });
   };
   handleEdit = (id) => {
     const newTodoList = this.state.todoList.filter((item) => item.id !== id);
@@ -84,46 +66,52 @@ class TodoItem extends React.Component {
       update: true,
       todoList: newTodoList,
     });
-    // newTodoList.map((item) => {
-    //   return item.id === e.id
-    //     ? ((item.editAble = !item.editAble),
-    //       // this.setState({ task: item.data, update: true }))
-    //       this.setState({ task: item.data, update: true }))
-    //     : "";
-    // });
-    // this.setState({ todoList: newTodoList });
   };
   render() {
     const input = (
-      <div className=" mt-4 mx-auto " style={{ width: "25em" }}>
-        <div className="input-group mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter your task"
-            value={this.state.task}
-            onChange={this.dataChanged}
-            aria-label="Enter your task"
-            aria-describedby="button-addon2"
-          />
-          <button
-            className="btn btn-outline-secondary text-white"
-            type="button"
-            id="button-addon2"
-            onClick={this.handleAddTodo}
-          >
-            {
-              this.state.update ? "Update" : "Add"
-              /* <GrUpdate style={{ textColor: "white" }} />
-              <GrAdd />*/
-            }
-          </button>
+      <>
+        <div className=" text-center my-3">
+          <h3 className="text-white ">Todoapp</h3>
         </div>
-      </div>
+        <div className=" mt-4 mx-auto " style={{ width: "25em" }}>
+          <form
+            action=""
+            className="input-group mb-3"
+            onSubmit={this.handleAddTodo}
+          >
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter your task"
+              value={this.state.task}
+              onChange={this.dataChanged}
+              aria-label="Enter your task"
+            />
+            <button
+              className="btn btn-outline-secondary text-white"
+              type="button"
+              onClick={this.handleAddTodo}
+            >
+              {
+                this.state.update ? "Update" : "Add"
+                //  ( <GrUpdate color="white" />
+                // ) : (
+                //   <GrAdd color="white" /> )
+              }
+            </button>
+            <button
+              class="btn btn-danger text-white btn-outline-secondary"
+              type="button"
+              onClick={this.handleClear}
+            >
+              Clear
+            </button>
+          </form>
+        </div>
+      </>
     );
     return (
       <>
-        <Header />
         {input}
         <Display
           todoList={this.state.todoList}
