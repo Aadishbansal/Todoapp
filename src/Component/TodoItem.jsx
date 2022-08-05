@@ -6,6 +6,7 @@ class TodoItem extends React.Component {
     super(props);
     this.state = {
       update: false,
+      tempid: "",
       task: "",
       todoList: [],
     };
@@ -16,11 +17,28 @@ class TodoItem extends React.Component {
   handleAddTodo = (e) => {
     if (!this.state.task) {
       alert("task can't be empty");
+    } else if (this.state.update) {
+      const newTodo = {
+        id: this.state.tempid,
+        data: this.state.task,
+        check: false,
+      };
+      const tempTodoList = [...this.state.todoList, newTodo];
+      const tempTodoListS = tempTodoList.sort((a, b) => {
+        return a.id - b.id;
+      });
+      this.setState({
+        todoList: tempTodoListS,
+        task: "",
+        tempid: "",
+        update: false,
+      });
     } else {
       let id;
       this.state.todoList.length === 0
         ? (id = 0)
-        : (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
+        : // : (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
+          (id = this.state.todoList.length + 1);
       const newTodo = {
         id: id,
         data: this.state.task,
@@ -64,6 +82,7 @@ class TodoItem extends React.Component {
     this.setState({
       task: selected.data,
       update: true,
+      tempid: selected.id,
       todoList: newTodoList,
     });
   };
@@ -100,7 +119,7 @@ class TodoItem extends React.Component {
               }
             </button>
             <button
-              class="btn btn-danger text-white btn-outline-secondary"
+              className="btn btn-danger text-white btn-outline-secondary"
               type="button"
               onClick={this.handleClear}
             >
