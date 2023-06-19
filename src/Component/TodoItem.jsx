@@ -1,6 +1,7 @@
 import React from "react";
 import { Display } from "./Display";
 // import { GrUpdate, GrAdd } from "react-icons/gr";
+
 class TodoItem extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,8 @@ class TodoItem extends React.Component {
     this.setState({ task: e.target.value });
   };
   handleAddTodo = (e) => {
+    e.preventDefault();
+
     if (!this.state.task) {
       alert("task can't be empty");
     } else if (this.state.update) {
@@ -38,7 +41,7 @@ class TodoItem extends React.Component {
       this.state.todoList.length === 0
         ? (id = 0)
         : // : (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
-          (id = this.state.todoList.length + 1);
+          (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
       const newTodo = {
         id: id,
         data: this.state.task,
@@ -49,9 +52,7 @@ class TodoItem extends React.Component {
         task: "",
         update: false,
       });
-      console.log(this.state.todoList);
     }
-    e.preventDefault();
   };
   handleClear = () => {
     this.state.todoList.length === 0
@@ -64,7 +65,6 @@ class TodoItem extends React.Component {
       return item.id === id ? (item.check = true) : "";
     });
     this.setState({ todoList: newTodoList });
-    console.log(this.state.todoList);
   };
 
   handleRemove = (id) => {
@@ -86,6 +86,18 @@ class TodoItem extends React.Component {
       todoList: newTodoList,
     });
   };
+  componentDidMount() {
+    const isLocalStorage = localStorage.getItem("state");
+    if (isLocalStorage) {
+      const newData = JSON.parse(isLocalStorage);
+      this.setState({
+        ...newData,
+      });
+    }
+  }
+  componentDidUpdate() {
+    localStorage.setItem("state", JSON.stringify(this.state));
+  }
   render() {
     const input = (
       <>
