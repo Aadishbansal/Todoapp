@@ -40,8 +40,8 @@ class TodoItem extends React.Component {
       let id;
       this.state.todoList.length === 0
         ? (id = 0)
-        : // : (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
-          (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
+        : (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
+      // : (id = this.state.todoList[this.state.todoList.length - 1].id + 1);
       const newTodo = {
         id: id,
         data: this.state.task,
@@ -101,43 +101,81 @@ class TodoItem extends React.Component {
   render() {
     const input = (
       <>
-        <div className=" text-center my-3">
-          <h3 className="text-white ">Todoapp</h3>
-        </div>
-        <div className=" mt-4 mx-auto " style={{ width: "25em" }}>
-          <form
-            action=""
-            className="input-group mb-3"
-            onSubmit={this.handleAddTodo}
-          >
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter your task"
-              value={this.state.task}
-              onChange={this.dataChanged}
-              aria-label="Enter your task"
-            />
-            <button
-              className="btn btn-outline-secondary text-white"
-              type="button"
-              onClick={this.handleAddTodo}
-            >
-              {
-                this.state.update ? "Update" : "Add"
-                //  ( <GrUpdate color="white" />
-                // ) : (
-                //   <GrAdd color="white" /> )
-              }
-            </button>
-            <button
-              className="btn btn-danger text-white btn-outline-secondary"
-              type="button"
-              onClick={this.handleClear}
-            >
-              Clear
-            </button>
-          </form>
+        <h3 className=" text-center my-3 text-white ">Todoapp</h3>
+        <div className="container-fluid">
+          <div className="row  justify-content-center">
+            <div className="col-10 col-lg-6">
+              {" "}
+              <form
+                action=""
+                className="input-group mb-3"
+                onSubmit={this.handleAddTodo}
+              >
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your task"
+                  value={this.state.task}
+                  onChange={this.dataChanged}
+                  aria-label="Enter your task"
+                />
+                <button
+                  className="btn btn-outline-secondary text-white"
+                  type="button"
+                  onClick={this.handleAddTodo}
+                >
+                  {
+                    this.state.update ? "Update" : "Add"
+                    //  ( <GrUpdate color="white" />
+                    // ) : (
+                    //   <GrAdd color="white" /> )
+                  }
+                </button>
+                <button
+                  className="btn btn-danger text-white btn-outline-secondary"
+                  type="button"
+                  onClick={this.handleClear}
+                >
+                  Clear
+                </button>
+              </form>
+            </div>
+            {/* <div className=" col-10 col-lg-6 mt-4 mx-auto ">
+              <form
+                action=""
+                className="input-group mb-3"
+                onSubmit={this.handleAddTodo}
+              >
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your task"
+                  value={this.state.task}
+                  onChange={this.dataChanged}
+                  aria-label="Enter your task"
+                />
+                <button
+                  className="btn btn-outline-secondary text-white"
+                  type="button"
+                  onClick={this.handleAddTodo}
+                >
+                  {
+                    this.state.update ? "Update" : "Add"
+                    //  ( <GrUpdate color="white" />
+                    // ) : (
+                    //   <GrAdd color="white" /> )
+                  }
+                </button>
+                <button
+                  className="btn btn-danger text-white btn-outline-secondary"
+                  type="button"
+                  onClick={this.handleClear}
+                >
+                  Clear
+                </button>
+              </form>
+            </div> */}
+          </div>
         </div>
       </>
     );
